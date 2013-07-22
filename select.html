@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Ember.Select</title>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="handlebars-1.0.0-rc.4.js"></script>
+    <script src="ember-1.0.0-rc.6.js"></script>
+  </head>
+  <body>
+
+    <script>
+    var App = Ember.Application.create({
+      LOG_TRANSITIONS: true,
+      LOG_TRANSITIONS_INTERNAL: true,
+      LOG_VIEW_LOOKUPS: true,
+      LOG_ACTIVE_GENERATION: true,
+      LOG_BINDINGS: true
+    });
+
+    App.options = [
+      { value: 'a', label: 'Option A' },
+      { value: 'b', label: 'Option B' },
+      { value: 'c', label: 'Option C' },
+      { value: 'd', label: 'Option D' },
+      { value: 'e', label: 'Option E' }
+    ];
+
+    App.filter = null;
+
+    App.addObserver('filter', function (object, property) {
+      console.log(object.get('filter').value);
+    });
+    </script>
+
+    <script type="text/x-handlebars" id="application">
+    Here is a select box:
+    {{outlet}}
+    </script>
+
+    <script type="text/x-handlebars" id="index">
+      {{view Ember.Select
+        contentBinding="App.options"
+        optionValuePath="content.value"
+        optionLabelPath="content.label"
+        selectionBinding="App.filter"
+        }}
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Sorted Ember.ArrayController</title>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="handlebars-1.0.0-rc.4.js"></script>
+    <script src="ember-1.0.0-rc.6.js"></script>
+  </head>
+  <body>
+
+    <script>
+    var App = Ember.Application.create({
+      LOG_TRANSITIONS: true,
+      LOG_TRANSITIONS_INTERNAL: true,
+      LOG_VIEW_LOOKUPS: true,
+      LOG_ACTIVE_GENERATION: true,
+      LOG_BINDINGS: true
+    });
+
+    var Chat = Ember.Object.extend({
+      created_at: null,
+      title: null
+    });
+
+    App.IndexRoute = Ember.Route.extend({
+      model: function (params) {
+        return [
+          Chat.create({ created_at: 2, title: 'b' }),
+          Chat.create({ created_at: 1, title: 'a' }),
+          Chat.create({ created_at: 3, title: 'c' })
+        ];
+      }
+    });
+
+    App.IndexController = Ember.ArrayController.extend({
+      sortProperties: [ 'created_at' ],
+      sortAscending: true
+    });
+    </script>
+
+    <script type="text/x-handlebars" id="index">
+      The chats are:
+      <ul>
+      {{#each this}}
+        <li>{{created_at}} - {{title}}</li>
+      {{/each}}
+      </ul>
+    </script>
+
+  </body>
+</html>
